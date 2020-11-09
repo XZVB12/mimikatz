@@ -1,5 +1,5 @@
 /*	Benjamin DELPY `gentilkiwi`
-	http://blog.gentilkiwi.com
+	https://blog.gentilkiwi.com
 	benjamin@gentilkiwi.com
 	Licence : https://creativecommons.org/licenses/by/4.0/
 */
@@ -79,6 +79,10 @@ typedef struct _DSS_GENERICKEY3_BLOB {
 
 #if !defined(BCRYPT_ECDSA_PRIVATE_GENERIC_MAGIC)
 #define BCRYPT_ECDSA_PRIVATE_GENERIC_MAGIC  0x56444345  // ECDV
+#endif
+
+#if !defined(BCRYPT_HMAC_SHA256_ALG_HANDLE)
+#define BCRYPT_HMAC_SHA256_ALG_HANDLE	((BCRYPT_ALG_HANDLE) 0x000000b1)
 #endif
 
 #ifndef CRYPT_ECC_PRIVATE_KEY_INFO_v1

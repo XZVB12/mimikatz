@@ -1,5 +1,5 @@
 /*	Benjamin DELPY `gentilkiwi`
-	http://blog.gentilkiwi.com
+	https://blog.gentilkiwi.com
 	benjamin@gentilkiwi.com
 	Licence : https://creativecommons.org/licenses/by/4.0/
 */
@@ -790,7 +790,7 @@ NTSTATUS kuhl_m_crypto_hash(int argc, wchar_t * argv[])
 
 	RtlInitUnicodeString(&uPassword, szPassword);
 	RtlInitUnicodeString(&uUsername, szUsername);
-	if(NT_SUCCESS(RtlDigestNTLM(&uPassword, hash)))
+	if(NT_SUCCESS(RtlCalculateNtOwfPassword(&uPassword, hash)))
 	{
 		kprintf(L"NTLM: "); kull_m_string_wprintf_hex(hash, LM_NTLM_HASH_LENGTH, 0); kprintf(L"\n");
 		if(szUsername)
@@ -821,7 +821,7 @@ NTSTATUS kuhl_m_crypto_hash(int argc, wchar_t * argv[])
 
 	if(NT_SUCCESS(RtlUpcaseUnicodeStringToOemString(&oTmp, &uPassword, TRUE)))
 	{
-		if(NT_SUCCESS(RtlDigestLM(oTmp.Buffer, hash)))
+		if(NT_SUCCESS(RtlCalculateLmOwfPassword(oTmp.Buffer, hash)))
 		{
 			kprintf(L"LM  : "); kull_m_string_wprintf_hex(hash, LM_NTLM_HASH_LENGTH, 0); kprintf(L"\n");
 		}
@@ -928,7 +928,7 @@ NTSTATUS kuhl_m_crypto_system(int argc, wchar_t * argv[])
 		if(PathIsDirectory(infile))
 		{
 			kprintf(L"* Directory: \'%s\'\n", infile);
-			kull_m_file_Find(infile, NULL, FALSE, 0, FALSE, kuhl_m_crypto_system_directory, &isExport);
+			kull_m_file_Find(infile, NULL, FALSE, 0, FALSE, FALSE, kuhl_m_crypto_system_directory, &isExport);
 		}
 		else kuhl_m_crypto_system_directory(0, infile, PathFindFileName(infile), &isExport);
 	}
